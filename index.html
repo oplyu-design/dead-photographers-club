@@ -176,7 +176,6 @@
             </select>
             
             <button class="main-btn" onclick="recommendCamera()" style="margin-top: 10px; background-color: var(--pastel-melon); color: var(--point-green);">🥖 베이킹 레시피 오픈</button>
-            
             <div id="recommendation-result" class="result-box" style="display: none;"></div>
         </div>
 
@@ -206,6 +205,10 @@
 
             <ul id="camera-list"></ul>
         </div>
+        
+        <p style="text-align: center; font-size: 10px; color: #aaa; margin-top: 40px;">
+            "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
+        </p>
     </div>
 
     <script>
@@ -481,7 +484,8 @@
             const cameraDisplayTitle = selectedCamera.name + (selectedCamera.lens ? ` (${selectedCamera.lens})` : '');
 
             resultBox.style.display = "block";
-            // 💡 캡처에 포함하고 싶지 않은 링크/버튼들은 함수 바깥이나 하단에 따로 배치함
+            
+            // 💡 [여기에_아까_복사한_쿠팡주소_넣기] 지우고 복사한 링크 붙여넣기!! (2군데)
             resultBox.innerHTML = `
                 <div id="capture-area" style="padding: 10px; background: #fdfdfb; border-radius: 12px;">
                     <div class="recipe-book-header">DOC RECIPE & DAILY MISSION</div>
@@ -503,16 +507,14 @@
                     </button>
                     <button class="download-btn" onclick="saveRecipeAsImage()" style="margin-top: 0;">💾 폰 사진첩에 처방전 저장하기</button>
                 </div>
-                <a href="#" class="shop-affiliate-link" onclick="alert('제휴 쇼핑몰로 이동합니다.')">🛒 레시피에 어울리는 추천 소모품/소품 보러가기 →</a>
+                <a href="여기에_아까_복사한_쿠팡주소_넣기" target="_blank" class="shop-affiliate-link">🛒 레시피에 어울리는 추천 소모품/소품 보러가기 →</a>
             `;
         }
 
-        // 💡 [핵심 추가 함수] 처방전 영역을 폰 갤러리에 저장하는 로직
         function saveRecipeAsImage() {
             const target = document.getElementById('capture-area');
             if (!target) return;
 
-            // 모바일 해상도 깨짐 방지를 위해 스케일 업(배율 2배) 세팅
             html2canvas(target, {
                 scale: 2,
                 backgroundColor: "#fdfdfb",
@@ -522,7 +524,6 @@
                 link.download = `DPS-처방전-${new Date().toISOString().slice(2,10)}.png`;
                 link.href = canvas.toDataURL('image/png');
                 
-                // 데스크톱 및 안드로이드 자동 다운로드 트리거
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -596,7 +597,7 @@
                                 <strong>"사진 필터보다 중요한 건 감성 한 스푼!"</strong><br>
                                 아날로그 출사족을 위한 프리미엄 가죽 스트랩 10% 할인가 구경하기.
                             </div>
-                            <a href="#" class="shop-affiliate-link" style="margin-top:8px; padding:6px; font-size:11px;" onclick="alert('광고 이동')">구경하러 가기 →</a>
+                            <a href=https://link.coupang.com/a/e0dLPDn2iWtarget="_blank" class="shop-affiliate-link" style="margin-top:8px; padding:6px; font-size:11px;">구경하러 가기 →</a>
                         </div>
                     `;
                 }
