@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎬 죽은 사진사 클럽 | Dead Photographers Society</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-color: #f6f4ee; 
@@ -103,6 +104,12 @@
             margin-bottom: 12px; line-height: 1.5;
         }
 
+        .digital-color-recipe {
+            background-color: #eef5fc; padding: 12px 14px; border-radius: 10px;
+            border: 2px solid #4a7bb0; font-size: 13px; font-weight: 700; color: #2b517a;
+            margin-bottom: 12px; line-height: 1.5;
+        }
+
         .download-btn {
             width: 100%; background-color: var(--pastel-melon); color: var(--point-green);
             border: 2px solid #332b24; padding: 12px; border-radius: 10px; cursor: pointer;
@@ -169,6 +176,7 @@
             </select>
             
             <button class="main-btn" onclick="recommendCamera()" style="margin-top: 10px; background-color: var(--pastel-melon); color: var(--point-green);">🥖 베이킹 레시피 오픈</button>
+            
             <div id="recommendation-result" class="result-box" style="display: none;"></div>
         </div>
 
@@ -190,7 +198,7 @@
             <p class="desc-text">카메라 바디와 렌즈 조합을 도구함에 채워보세요.</p>
             
             <div class="form-row">
-                <input type="text" id="camera-name" placeholder="카메라 바디 기종명 (예: 캐논 오토보이 N150)">
+                <input type="text" id="camera-name" placeholder="카메라 바디 기종명 (예: 리코 GR3, 익서스 125)">
                 <input type="text" id="lens-name" placeholder="마운트한 렌즈명 (없거나 일체형이면 비워두세요)">
                 <select id="camera-type"></select>
             </div>
@@ -207,12 +215,11 @@
             { name: "미놀타 X-700", lens: "50mm F1.4", type: "35mm 수동필카" }
         ];
         let digitalCameras = JSON.parse(localStorage.getItem('digitalCameras_v2')) || [
-            { name: "리코 GR3", lens: "", type: "컴팩트 디카(똑딱이)" },
-            { name: "소니 RX100 M7", lens: "", type: "하이엔드 디카" }
+            { name: "소니 켄코(빈티지)", lens: "", type: "컴팩트 디카(똑딱이)" },
+            { name: "리코 GR3", lens: "", type: "하이엔드 디카" }
         ];
         let reviews = JSON.parse(localStorage.getItem('photoReviews_v2')) || [];
 
-        // 💡 [개선] '빵'이라는 직관적 단어를 제거하고 사진적 감성만 남긴 미션 풀
         const missionPool = [
             "출근/등교 길에 발견한 가장 강렬한 '노란색' 오브제 포착하기",
             "따뜻한 김이 피어오르는 골목길 카페의 아늑한 한구석 시선에 담기",
@@ -239,6 +246,24 @@
             }
         };
 
+        const digitalColorDatabase = {
+            compact: {
+                bright: "🎨 Y2K 골든 빈티지 레시피<br>• 화이트밸런스: 흐림(Cloudy) 또는 6000K<br>• 채도(Saturation): +1 | 노출 보정: -0.7ev<br>• 팁: 구형 CCD 센서 특유의 찐득하고 노란 2000년대 미니홈피 감성이 맑은 해 아래서 뿜어져 나옵니다.",
+                dark: "🎨 거친 통밀 흑백 노이즈 레시피<br>• 마이스타일: 모노크롬(흑백)<br>• 콘트라스트: +2 | ISO 감도: 1600 강제 고정<br>• 팁: 컴팩트 디카의 야간 노이즈를 픽셀 버그가 아닌, 거친 아날로그 인화지 입자감처럼 역이용하는 처방입니다. 과감히 내장 플래시를 켜세요!",
+                rainy: "🎨 청량 소다 물망초 레시피<br>• 화이트밸런스: 형광등(Cool White) 또는 4200K<br>• 색조(Tint): 마젠타(M) 방향 +1<br>• 팁: 비 오는 날 특유의 어둑함을 완전히 차가운 푸른 계열로 틀어버려, 물기 어린 도시를 일본 청춘 영화 속 한 장면처럼 세팅합니다."
+            },
+            high_end: {
+                bright: "🎨 포지티브 필름 클래식 레시피<br>• 효과: 포지티브 필름(혹은 클래식 크롬)<br>• 화이트밸런스: 태양광 (A: +2, G: -1 미세조정)<br>• 팁: 하이엔드의 칼 같은 선예도 위에 물 빠진 듯 단단한 마찰력을 더합니다. 하이라이트(밝은 곳)가 날아가지 않게 노출을 반 칸 내리세요.",
+                dark: "🎨 시네마틱 심야 미드나잇 레시피<br>• 화이트밸런스: 3200K (텅스텐/백열등 모드)<br>• 콘트라스트: -1 (암부 부드럽게) | 주변부 광량 저하(비네팅): ON<br>• 팁: 가로등과 자동차 미등의 오렌지빛이 푸른 밤안개와 섞여 홍콩 느와르 필름 같은 시네마틱 톤을 발산합니다.",
+                rainy: "🎨 매트 멜랑콜리 포트라 레시피<br>• 화이트밸런스: 그늘(Shadow)모드<br>• 선명도(Sharpness): -2 (부드럽게) | 채도: -1<br>• 팁: 비 오는 그늘에서 렌즈의 날카로움을 깎아내어 포트라 필름처럼 부드럽고 몽환적인 파스텔 파우더 질감을 유도합니다."
+            },
+            mirrorless: {
+                bright: "🎨 엑타크롬 슬라이드 레시피<br>• 화이트밸런스: 5200K (A:+3, M:+1)<br>• 픽처스타일: 풍경(Landscape) 기반 채도 업, 콘트라스트 업<br>• 팁: 대형 센서의 풍부한 계조를 활용해 코닥의 명품 슬라이드 필름인 '엑타크롬' 특유의 쨍하고 눈부신 원색의 대비를 모사합니다.",
+                dark: "🎨 시티 밤 아날로그 텍스처 레시피<br>• ISO: Auto (최대 6400 제한) | 노출보정: -0.3ev<br>• 입자감 효과(Grain Effect): 강하게(Strong)<br>• 팁: 암부를 묵직하게 누르고 카메라 자체 그레인(Grain) 기능을 켜서, 어두운 골목길을 35mm 고감도 필름 필하모닉 무드로 구워냅니다.",
+                rainy: "🎨 시네스틸 800T 야레시피<br>• 화이트밸런스: 백열등(Tungsten) 모드 고정<br>• 노출 보정: +0.3ev (화사하게)<br>• 팁: 밤이나 낮이나 빗방울과 네온사인이 번지는 곳에서 스냅을 찍으면 영화 촬영용 필름인 '시네스틸' 특유의 이국적인 청록색 웅덩이가 고스란히 담깁니다."
+            }
+        };
+
         const recipeDatabase = {
             film: {
                 manual: {
@@ -253,9 +278,9 @@
                 }
             },
             digital: {
-                bright: "화이트 밸런스 '태양광(5500K)' 세팅! 노출은 -0.3ev로 약간 어둡게 눌러주면 필름 특유의 계조 풍미가 깊어집니다.",
-                dark: "노출 저하를 두려워 말고 ISO 3200 업! 디지털 입자감 효과(Grain)를 강하게 주면 거친 아날로그 텍스처 감성이 표현됩니다.",
-                rainy: "화이트 밸런스를 '그늘(6500K)'로 설정해 따뜻한 무드를 더하거나, 아예 차갑게 식혀 몽환적인 푸른 톤으로 연출해 보세요."
+                bright: "최대한 밝은 야외이므로 ISO는 100~200 최저로 낮춰 렌즈의 맑은 입자를 확보하고, 셔터스피드로 광량을 조절하세요.",
+                dark: "빛이 부족하여 흔들리기 쉽습니다. 손떨림 방지를 켜고 최대 개방 조리개로 세팅한 후 하단의 커스텀 토핑값을 적용하세요.",
+                rainy: "어스름한 난반사가 이쁜 날씨입니다. 노출이 너무 밝게 잡히기 쉬우니 한 단계 언더로 낮추어 촬영하는 걸 추천합니다."
             }
         };
 
@@ -279,7 +304,7 @@
             const index = Math.abs(hash) % missionPool.length;
             return {
                 text: missionPool[index],
-                key: `mission-storage-v2-${combinedSeed}`
+                key: `mission-storage-v3-${combinedSeed}`
             };
         }
 
@@ -327,7 +352,6 @@
                 `;
             } else {
                 archiveTitle.innerText = "디카 전용";
-                // 💡 [개선] 직관적인 대중 기종 라인업으로 수정
                 cameraTypeSelect.innerHTML = `
                     <option value="컴팩트 디카(똑딱이)">컴팩트 디카(똑딱이)</option>
                     <option value="하이엔드 디카">하이엔드 디카</option>
@@ -387,7 +411,7 @@
 
             const newCamera = { 
                 name: nameInput.value.trim(), 
-                lens: lensInput.value.trim(), // 비어있으면 공백 처리
+                lens: lensInput.value.trim(), 
                 type: typeSelect.value 
             };
             
@@ -435,7 +459,7 @@
             const isMissionCleared = localStorage.getItem(missionData.key) === 'true';
 
             let recipeText = "";
-            let filmRecommendHtml = "";
+            let uniqueRecommendHtml = ""; 
 
             if (currentMode === 'film') {
                 const isAuto = selectedCamera.type.includes("자동필카");
@@ -443,33 +467,71 @@
                 
                 recipeText = recipeDatabase.film[subType][selectedWeather];
                 const filmText = filmRecommendationDatabase[subType][selectedWeather];
-                filmRecommendHtml = `<div class="film-recommendation">🎞️ ${filmText}</div>`;
+                uniqueRecommendHtml = `<div class="film-recommendation">🎞️ ${filmText}</div>`;
             } else {
+                let digiKey = "mirrorless";
+                if (selectedCamera.type.includes("컴팩트")) digiKey = "compact";
+                else if (selectedCamera.type.includes("하이엔드")) digiKey = "high_end";
+
                 recipeText = recipeDatabase.digital[selectedWeather];
+                const digiColorText = digitalColorDatabase[digiKey][selectedWeather];
+                uniqueRecommendHtml = `<div class="digital-color-recipe">${digiColorText}</div>`;
             }
 
             const cameraDisplayTitle = selectedCamera.name + (selectedCamera.lens ? ` (${selectedCamera.lens})` : '');
 
             resultBox.style.display = "block";
+            // 💡 캡처에 포함하고 싶지 않은 링크/버튼들은 함수 바깥이나 하단에 따로 배치함
             resultBox.innerHTML = `
-                <div class="recipe-book-header">DOC RECIPE & DAILY MISSION</div>
-                <div class="recipe-title">✨ [${cameraDisplayTitle}] 당일 한정 처방전</div>
-                <div class="recipe-detail">${recipeText}</div>
-                
-                ${filmRecommendHtml}
+                <div id="capture-area" style="padding: 10px; background: #fdfdfb; border-radius: 12px;">
+                    <div class="recipe-book-header">DOC RECIPE & DAILY MISSION</div>
+                    <div class="recipe-title">✨ [${cameraDisplayTitle}] 당일 한정 처방전</div>
+                    <div class="recipe-detail">${recipeText}</div>
+                    
+                    ${uniqueRecommendHtml}
 
-                <div class="recipe-mission-box">
-                    <div class="recipe-mission-title">🎯 오늘의 운명적 시선 미션</div>
-                    <div class="recipe-mission-text">📸 ${missionData.text}</div>
-                    <button class="mission-inline-btn ${isMissionCleared ? 'completed' : ''}" 
-                            onclick="toggleInlineMission(this, '${missionData.key}')">
-                        ${isMissionCleared ? '🎉 미션 완수 인증 완료!' : '🥖 미션 완료하기'}
-                    </button>
+                    <div class="recipe-mission-box">
+                        <div class="recipe-mission-title">🎯 오늘의 운명적 시선 미션</div>
+                        <div class="recipe-mission-text">📸 ${missionData.text}</div>
+                    </div>
                 </div>
 
-                <button class="download-btn" onclick="alert('레시피와 오늘 미션이 파티시에 노트에 저장되었습니다!')">💾 레시피 노트에 담기</button>
+                <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+                    <button class="mission-inline-btn ${isMissionCleared ? 'completed' : ''}" 
+                            onclick="toggleInlineMission(this, '${missionData.key}')" style="padding: 10px; font-size:12px;">
+                        ${isMissionCleared ? '🎉 미션 완수 인증 완료 상태' : '🥖 미션 완료하기 (도장 쾅!)'}
+                    </button>
+                    <button class="download-btn" onclick="saveRecipeAsImage()" style="margin-top: 0;">💾 폰 사진첩에 처방전 저장하기</button>
+                </div>
                 <a href="#" class="shop-affiliate-link" onclick="alert('제휴 쇼핑몰로 이동합니다.')">🛒 레시피에 어울리는 추천 소모품/소품 보러가기 →</a>
             `;
+        }
+
+        // 💡 [핵심 추가 함수] 처방전 영역을 폰 갤러리에 저장하는 로직
+        function saveRecipeAsImage() {
+            const target = document.getElementById('capture-area');
+            if (!target) return;
+
+            // 모바일 해상도 깨짐 방지를 위해 스케일 업(배율 2배) 세팅
+            html2canvas(target, {
+                scale: 2,
+                backgroundColor: "#fdfdfb",
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `DPS-처방전-${new Date().toISOString().slice(2,10)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                
+                // 데스크톱 및 안드로이드 자동 다운로드 트리거
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                alert("🎨 처방전 티켓이 스마트폰 다운로드 폴더(혹은 사진첩)로 구워졌습니다! 확인해 보세요.");
+            }).catch(err => {
+                alert("이미지 굽기 실패! 브라우저 권한을 확인해 주세요.");
+                console.error(err);
+            });
         }
 
         function addReview() {
