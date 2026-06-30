@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 죽은 사진사 클럽 | Dead Photographers Society</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-color: #f6f4ee; 
+            --card-bg: #ffffff;
+            --text-main: #332b24; 
+            --point-green: #3d6447; 
+            --pastel-melon: #e2ede0; 
+            --pastel-peach: #fce2da; 
+            --border-heavy: 3px solid #332b24; 
+        }
+
+        body { 
+            font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-main); 
+            margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center;
+        }
+        .container { width: 100%; max-width: 480px; }
+        
+        header { 
+            text-align: center; margin-bottom: 24px; background-color: var(--pastel-peach);
+            border: var(--border-heavy); padding: 22px; border-radius: 18px; box-shadow: 5px 5px 0px #332b24;
+        }
+        header h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px 0; color: var(--point-green); letter-spacing: -0.5px; }
+        header p { font-size: 13px; font-weight: 600; margin: 0; color: #665b52; letter-spacing: 0.5px; }
+
+        .tab-menu { display: flex; gap: 8px; margin-bottom: 24px; }
+        .tab-btn {
+            flex: 1; background: #fff; color: var(--text-main); border: var(--border-heavy);
+            padding: 13px; border-radius: 14px; cursor: pointer; font-size: 14px; font-weight: 700;
+            box-shadow: 3px 3px 0px #332b24; transition: all 0.1s;
+        }
+        .tab-btn.active {
+            background: var(--point-green); color: white; box-shadow: 0px 0px 0px #332b24; transform: translate(3px, 3px);
+        }
+
+        .card { 
+            background-color: var(--card-bg); padding: 24px; margin-bottom: 30px; 
+            border-radius: 20px; border: var(--border-heavy); box-shadow: 5px 5px 0px #332b24;
+        }
+        h2 { font-size: 17px; font-weight: 800; margin-top: 0; margin-bottom: 16px; color: var(--point-green); display: flex; align-items: center; gap: 6px; }
+        .desc-text { font-size: 13px; font-weight: 500; color: #756a60; margin-top: -8px; margin-bottom: 16px; }
+
+        input, select { 
+            width: 100%; box-sizing: border-box; padding: 13px 16px; margin-bottom: 14px; 
+            border: var(--border-heavy); border-radius: 12px; font-size: 14px; font-weight: 600;
+            background-color: #fafafa; color: var(--text-main); outline: none;
+        }
+        input:focus, select:focus { background-color: #fff; border-color: var(--point-green); }
+
+        .form-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+
+        button.main-btn { 
+            width: 100%; background-color: var(--pastel-peach); color: var(--text-main); 
+            border: var(--border-heavy); padding: 13px; border-radius: 12px; cursor: pointer; 
+            font-size: 14px; font-weight: 800; box-shadow: 4px 4px 0px #332b24; transition: all 0.1s;
+        }
+        button.main-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #332b24; }
+
+        ul { padding: 0; margin: 20px 0 0 0; }
+        li { 
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; background: #fff; padding: 13px 16px; 
+            border-radius: 12px; font-size: 13.5px; font-weight: 600; border: 2px solid #332b24;
+        }
+        .camera-info-text { display: flex; flex-direction: column; gap: 2px; }
+        .camera-lens-meta { font-size: 11.5px; color: #756a60; font-weight: 500; }
+        .tag {
+            font-size: 10.5px; padding: 3px 6px; border-radius: 6px; display: inline-block; width: fit-content;
+            font-weight: 700; border: 1px solid #332b24; background-color: var(--pastel-melon); color: var(--point-green);
+        }
+        .delete-btn { background: none; color: #baafaa; border: none; font-weight: 700; cursor: pointer; }
+        .delete-btn:hover { color: #cc6666; }
+
+        .result-box { 
+            background-color: #fdfdfb; padding: 24px; border-radius: 16px; 
+            margin-top: 20px; border: 2px dashed var(--point-green);
+        }
+        .recipe-book-header { font-size: 11px; font-weight: 800; color: #8a8178; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; border-bottom: 2px dashed #332b24; padding-bottom: 6px; }
+        .recipe-title { font-weight: 800; color: var(--point-green); font-size: 15px; margin-top: 14px; margin-bottom: 6px; }
+        .recipe-detail { background: #fff; padding: 14px 16px; border-radius: 10px; border: 2px solid #332b24; font-size: 13px; font-weight: 600; line-height: 1.6; color: #555; margin-bottom: 10px; }
+        
+        .recipe-mission-box {
+            background-color: #fff9e6; padding: 14px; border-radius: 10px;
+            border: 2px dashed #b37400; font-size: 13px; margin-bottom: 12px;
+        }
+        .recipe-mission-title { font-weight: 800; color: #b37400; font-size: 11px; text-transform: uppercase; margin-bottom: 4px; }
+        .recipe-mission-text { font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 8px; }
+        .mission-inline-btn {
+            background: #fff; border: 1.5px solid #332b24; padding: 4px 8px; font-size: 11px; 
+            font-weight: 700; border-radius: 6px; cursor: pointer; transition: all 0.1s;
+        }
+        .mission-inline-btn.completed { background: var(--point-green); color: white; border-color: var(--point-green); }
+
+        .film-recommendation {
+            background-color: #e2ede0; padding: 12px 14px; border-radius: 10px;
+            border: 2px solid var(--point-green); font-size: 13px; font-weight: 700; color: var(--point-green);
+            margin-bottom: 12px; line-height: 1.5;
+        }
+
+        .download-btn {
+            width: 100%; background-color: var(--pastel-melon); color: var(--point-green);
+            border: 2px solid #332b24; padding: 12px; border-radius: 10px; cursor: pointer;
+            font-size: 13px; font-weight: 800; margin-top: 6px; box-shadow: 3px 3px 0px #332b24;
+            text-align: center; box-sizing: border-box;
+        }
+
+        .shop-affiliate-link {
+            display: block; text-align: center; background-color: #fff9e6; color: #b37400;
+            border: 2px dashed #b37400; padding: 12px; border-radius: 10px; font-size: 12.5px;
+            font-weight: 800; text-decoration: none; margin-top: 12px; transition: background 0.2s;
+        }
+        .shop-affiliate-link:hover { background-color: #ffeebf; }
+
+        .ad-feed-item {
+            background: #faf8f5; border: 2px dashed #a3988e; border-radius: 12px;
+            padding: 16px; margin-bottom: 15px; position: relative;
+        }
+        .ad-badge {
+            position: absolute; top: 12px; right: 12px; font-size: 10px; background: #8a8178;
+            color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700;
+        }
+
+        .review-item {
+            background: #fff; border: 2px solid #332b24; border-radius: 12px;
+            padding: 16px; margin-bottom: 15px; box-shadow: 4px 4px 0px #332b24;
+        }
+        .review-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid #332b24; margin-bottom: 10px; }
+        .review-meta { font-size: 11px; color: #8a8178; font-weight: 700; margin-bottom: 6px; }
+        .review-text { font-size: 13px; font-weight: 600; line-height: 1.5; background: #faf8f5; padding: 10px; border-radius: 6px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🎬 죽은 사진사 클럽</h1>
+            <p>오늘의 빛과 시선을 굽는 아날로그 사진 베이커리</p>
+        </header>
+
+        <div class="card">
+            <h2>🧑‍🍳 파티시에 정보 등록</h2>
+            <p class="desc-text">오븐을 예열하기 전, 클럽에서 사용할 닉네임을 적어주세요.</p>
+            <input type="text" id="patissier-name" placeholder="예: 구운오토보이, 성수동말차빵" oninput="saveNickname()">
+        </div>
+
+        <div class="tab-menu">
+            <button id="tab-film" class="tab-btn active" onclick="switchTab('film')">📟 1번 오븐 (필름)</button>
+            <button id="tab-digital" class="tab-btn" onclick="switchTab('digital')">📷 2번 오븐 (디지털)</button>
+        </div>
+
+        <div class="card">
+            <h2>🥣 오늘의 시선 반죽 주문하기</h2>
+            <p class="desc-text">도구와 날씨를 고르면 베이킹 타이머(세팅 처방전)가 발급됩니다.</p>
+            
+            <label style="font-size: 12px; font-weight:700; display: block; margin-bottom: 4px;">✔ 사용할 베이킹 도구(기종)</label>
+            <select id="camera-select"></select>
+
+            <label style="font-size: 12px; font-weight:700; display: block; margin-bottom: 4px; margin-top: 8px;">✔ 오늘의 날씨 및 광량</label>
+            <select id="weather-select">
+                <option value="bright">☀️ 바삭바삭 노릇하게 구워지는 맑은 날</option>
+                <option value="dark">☁️ 촉촉하고 쫀득한 풍미의 흐린 날 / 밤</option>
+                <option value="rainy">☔ 말랑하고 몽환적인 감성의 비 내리는 날</option>
+            </select>
+            
+            <button class="main-btn" onclick="recommendCamera()" style="margin-top: 10px; background-color: var(--pastel-melon); color: var(--point-green);">🥖 베이킹 레시피 오픈</button>
+            <div id="recommendation-result" class="result-box" style="display: none;"></div>
+        </div>
+
+        <div class="card" id="review-card" style="display: none;">
+            <h2>🥧 갓 구운 사진 쇼케이스 (Review)</h2>
+            <p class="desc-text">오늘 구워낸 따끈따끈한 사진과 한 줄 시식평을 진열해 보세요!</p>
+            
+            <div class="review-input-box" style="margin-top: 10px;">
+                <input type="file" id="review-file" accept="image/*" style="padding: 8px;">
+                <input type="text" id="review-comment" placeholder="버터 향 가득하게 빛이 잘 구워졌어요!">
+                <button class="main-btn" onclick="addReview()">✨ 쇼케이스에 진열하기</button>
+            </div>
+
+            <div id="review-list-container" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="card">
+            <h2>📦 나의 베이킹 도구함 (<span id="card-archive-title">필카 전용</span>)</h2>
+            <p class="desc-text">카메라 바디와 렌즈 조합을 도구함에 채워보세요.</p>
+            
+            <div class="form-row">
+                <input type="text" id="camera-name" placeholder="카메라 바디 기종명 (예: 캐논 오토보이 N150)">
+                <input type="text" id="lens-name" placeholder="마운트한 렌즈명 (없거나 일체형이면 비워두세요)">
+                <select id="camera-type"></select>
+            </div>
+            <button class="main-btn" onclick="addCamera()">도구함에 추가하기</button>
+
+            <ul id="camera-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'film';
+        let filmCameras = JSON.parse(localStorage.getItem('filmCameras_v2')) || [
+            { name: "캐논 오토보이 N150", lens: "", type: "35mm 자동필카(똑딱이)" },
+            { name: "미놀타 X-700", lens: "50mm F1.4", type: "35mm 수동필카" }
+        ];
+        let digitalCameras = JSON.parse(localStorage.getItem('digitalCameras_v2')) || [
+            { name: "리코 GR3", lens: "", type: "컴팩트 디카(똑딱이)" },
+            { name: "소니 RX100 M7", lens: "", type: "하이엔드 디카" }
+        ];
+        let reviews = JSON.parse(localStorage.getItem('photoReviews_v2')) || [];
+
+        // 💡 [개선] '빵'이라는 직관적 단어를 제거하고 사진적 감성만 남긴 미션 풀
+        const missionPool = [
+            "출근/등교 길에 발견한 가장 강렬한 '노란색' 오브제 포착하기",
+            "따뜻한 김이 피어오르는 골목길 카페의 아늑한 한구석 시선에 담기",
+            "세월의 거친 흔적이 고스란히 묻어나는 낡은 벽이나 간판의 질감 기록하기",
+            "차갑고 단단한 콘크리트 틈새를 뚫고 자라난 작은 초록 잎사귀 찾아내기",
+            "창문이나 거울, 혹은 웅덩이에 비친 왜곡된 내 모습 투영해보기",
+            "아무도 쳐다보지 않고 길가에 멈춰 서 있는 자전거의 외로운 프레임 잡기",
+            "하늘과 건물이 칼로 자른 듯 맞물리는 기하학적인 스카이라인 구워내기",
+            "빛이 길게 늘어지는 그림자와 하이라이트의 극적인 대비감 표현하기",
+            "누군가 흘리고 간 물건이나 흔적을 통해 상상력을 자극하는 스토리 포착하기",
+            "일렬로 길게 뻗은 전신주나 복도의 끝없는 소실점 뷰에 담아내기"
+        ];
+
+        const filmRecommendationDatabase = {
+            manual: {
+                bright: "추천 생지: [코닥 골드 200] 또는 [후지 컬러 200]<br>따스하고 정겨운 노란 톤은 코닥을, 맑고 청량한 소다색은 후지를 채워보세요.",
+                dark: "추천 생지: [일포드 HP5 Plus 400] 또는 [코닥 울트라맥스 400]<br>빛이 모자라니 ISO 400 이상이 필수입니다. 거친 입자감의 흑백 필름도 훌륭한 처방입니다.",
+                rainy: "추천 생지: [후지 슈퍼리아 엑스트라 400]<br>흐리고 축축한 날의 차가운 초록/푸른 기운을 가장 몽환적으로 살려주는 명품 녹색 베이스 필름입니다."
+            },
+            auto: {
+                bright: "추천 생지: [코닥 컬러플러스 200] 또는 [후지 C200]<br>광량이 풍부하므로 가성비 좋은 ISO 200 생지로도 충분히 노릇하게 구워집니다. 야외라면 플래시는 잠시 꺼두셔도 좋습니다.",
+                dark: "추천 생지: [코닥 울트라맥스 400] 또는 [로모그래피 800]<br>오토보이 같은 똑딱이는 어두워지면 쉽게 흔들립니다! 고감도 필름을 넣고 무조건 '강제 플래시'를 터트려 동굴 효과를 즐기세요.",
+                rainy: "추천 생지: [포트라 400] 또는 [코닥 울트라맥스 400]<br>어스름한 빗길에는 입자가 고우면서도 어둠을 잘 견디는 ISO 400이 제격입니다. 실내나 그늘에서 플래시를 터트리면 힙한 무드가 살아납니다."
+            }
+        };
+
+        const recipeDatabase = {
+            film: {
+                manual: {
+                    bright: "ISO 200 기준. 셔터스피드는 1/500초로 바삭하게 맞추고, 조리개는 f/5.6으로 풍부한 감성을 살려보세요.",
+                    dark: "셔터스피드 1/30초 이하로 떨어지면 흔들리니 조리개를 최대 개방하여 주변의 최소한의 빛을 확보하세요.",
+                    rainy: "빗방울의 몽환함을 위해 조리개 f/4 정도로 초점을 은은하게 풀고 셔터를 눌러보세요."
+                },
+                auto: {
+                    bright: "자동 오븐이 알아서 세팅을 맞춥니다! 플래시는 강제로 끈 채(Flash Off) 자연광 가득하게 시선을 구워주세요.",
+                    dark: "흔들림 없는 촬영을 위해 똑딱이의 '강제 플래시(Flash On)' 화력을 발사하세요! 쨍하고 힙한 하이콘트라스트 결과물이 완성됩니다.",
+                    rainy: "흐릿하고 어두운 날씨입니다. 플래시를 켜면 떨어지는 빗방울이 하얗게 빛나고, 끄면 차분한 무채색 식감이 살아납니다."
+                }
+            },
+            digital: {
+                bright: "화이트 밸런스 '태양광(5500K)' 세팅! 노출은 -0.3ev로 약간 어둡게 눌러주면 필름 특유의 계조 풍미가 깊어집니다.",
+                dark: "노출 저하를 두려워 말고 ISO 3200 업! 디지털 입자감 효과(Grain)를 강하게 주면 거친 아날로그 텍스처 감성이 표현됩니다.",
+                rainy: "화이트 밸런스를 '그늘(6500K)'로 설정해 따뜻한 무드를 더하거나, 아예 차갑게 식혀 몽환적인 푸른 톤으로 연출해 보세요."
+            }
+        };
+
+        window.onload = function() {
+            document.getElementById('patissier-name').value = localStorage.getItem('patissierNickname') || '';
+            switchTab('film');
+            renderReviews();
+            checkReviewCardVisibility();
+        };
+
+        function getDeterministicMission(cameraName, weather) {
+            const today = new Date();
+            const dateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            const combinedSeed = `${dateString}+${cameraName}+${weather}`;
+            
+            let hash = 0;
+            for (let i = 0; i < combinedSeed.length; i++) {
+                hash = combinedSeed.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            
+            const index = Math.abs(hash) % missionPool.length;
+            return {
+                text: missionPool[index],
+                key: `mission-storage-v2-${combinedSeed}`
+            };
+        }
+
+        function toggleInlineMission(btn, storageKey) {
+            const isCompleted = btn.classList.contains('completed');
+            if (!isCompleted) {
+                localStorage.setItem(storageKey, 'true');
+                btn.innerText = "🎉 미션 완수 인증 완료!";
+                btn.classList.add('completed');
+                alert("오늘의 한정 미션을 성공적으로 완수하셨군요! 쇼케이스에 사진을 자랑해 보세요! 📷");
+            } else {
+                localStorage.removeItem(storageKey);
+                btn.innerText = "🥖 미션 완료하기";
+                btn.classList.remove('completed');
+            }
+        }
+
+        function saveNickname() {
+            const nickname = document.getElementById('patissier-name').value;
+            localStorage.setItem('patissierNickname', nickname);
+            checkReviewCardVisibility();
+            renderReviews();
+        }
+
+        function checkReviewCardVisibility() {
+            const nickname = localStorage.getItem('patissierNickname');
+            const reviewCard = document.getElementById('review-card');
+            reviewCard.style.display = (nickname && nickname.trim() !== "") ? "block" : "none";
+        }
+
+        function switchTab(mode) {
+            currentMode = mode;
+            document.getElementById('tab-film').classList.toggle('active', mode === 'film');
+            document.getElementById('tab-digital').classList.toggle('active', mode === 'digital');
+            
+            const archiveTitle = document.getElementById('card-archive-title');
+            const cameraTypeSelect = document.getElementById('camera-type');
+            
+            if (mode === 'film') {
+                archiveTitle.innerText = "필카 전용";
+                cameraTypeSelect.innerHTML = `
+                    <option value="35mm 수동필카">35mm 수동필카</option>
+                    <option value="35mm 자동필카(똑딱이)">35mm 자동필카(똑딱이)</option>
+                    <option value="중형 120필름">중형 120필름</option>
+                `;
+            } else {
+                archiveTitle.innerText = "디카 전용";
+                // 💡 [개선] 직관적인 대중 기종 라인업으로 수정
+                cameraTypeSelect.innerHTML = `
+                    <option value="컴팩트 디카(똑딱이)">컴팩트 디카(똑딱이)</option>
+                    <option value="하이엔드 디카">하이엔드 디카</option>
+                    <option value="미러리스 / DSLR">미러리스 / DSLR</option>
+                `;
+            }
+
+            updateCameraSelect();
+            renderCameraList();
+            document.getElementById('recommendation-result').style.display = 'none';
+        }
+
+        function updateCameraSelect() {
+            const select = document.getElementById('camera-select');
+            const cameras = currentMode === 'film' ? filmCameras : digitalCameras;
+            
+            select.innerHTML = '';
+            if (cameras.length === 0) {
+                select.innerHTML = `<option value="">등록된 도구가 없습니다. 아래에서 추가해주세요!</option>`;
+                return;
+            }
+            cameras.forEach((cam, index) => {
+                const lensText = cam.lens ? ` + ${cam.lens}` : ' (렌즈 일체형)';
+                select.innerHTML += `<option value="${index}">${cam.name}${lensText} [${cam.type}]</option>`;
+            });
+        }
+
+        function renderCameraList() {
+            const list = document.getElementById('camera-list');
+            const cameras = currentMode === 'film' ? filmCameras : digitalCameras;
+            
+            list.innerHTML = '';
+            cameras.forEach((cam, index) => {
+                const lensInfo = cam.lens ? `◽ 마운트 렌즈: ${cam.lens}` : `◽ 렌즈 일체형 기종`;
+                list.innerHTML += `
+                    <li>
+                        <div class="camera-info-text">
+                            <strong>${cam.name}</strong>
+                            <span class="camera-lens-meta">${lensInfo}</span>
+                            <span class="tag">${cam.type}</span>
+                        </div>
+                        <button class="delete-btn" onclick="deleteCamera(${index})">제거</button>
+                    </li>
+                `;
+            });
+        }
+
+        function addCamera() {
+            const nameInput = document.getElementById('camera-name');
+            const lensInput = document.getElementById('lens-name');
+            const typeSelect = document.getElementById('camera-type');
+            
+            if (!nameInput.value.trim()) {
+                alert('카메라 기종 이름을 입력해 주세요!');
+                return;
+            }
+
+            const newCamera = { 
+                name: nameInput.value.trim(), 
+                lens: lensInput.value.trim(), // 비어있으면 공백 처리
+                type: typeSelect.value 
+            };
+            
+            if (currentMode === 'film') {
+                filmCameras.push(newCamera);
+                localStorage.setItem('filmCameras_v2', JSON.stringify(filmCameras));
+            } else {
+                digitalCameras.push(newCamera);
+                localStorage.setItem('digitalCameras_v2', JSON.stringify(digitalCameras));
+            }
+
+            nameInput.value = '';
+            lensInput.value = '';
+            updateCameraSelect();
+            renderCameraList();
+        }
+
+        function deleteCamera(index) {
+            if (currentMode === 'film') {
+                filmCameras.splice(index, 1);
+                localStorage.setItem('filmCameras_v2', JSON.stringify(filmCameras));
+            } else {
+                digitalCameras.splice(index, 1);
+                localStorage.setItem('digitalCameras_v2', JSON.stringify(digitalCameras));
+            }
+            updateCameraSelect();
+            renderCameraList();
+        }
+
+        function recommendCamera() {
+            const cameraSelect = document.getElementById('camera-select');
+            const weatherSelect = document.getElementById('weather-select');
+            const resultBox = document.getElementById('recommendation-result');
+
+            const cameras = currentMode === 'film' ? filmCameras : digitalCameras;
+            if (cameras.length === 0 || !cameraSelect.value) {
+                alert('베이킹 도구함에 카메라를 먼저 등록해 주세요!');
+                return;
+            }
+
+            const selectedCamera = cameras[cameraSelect.value];
+            const selectedWeather = weatherSelect.value;
+            
+            const missionData = getDeterministicMission(selectedCamera.name, selectedWeather);
+            const isMissionCleared = localStorage.getItem(missionData.key) === 'true';
+
+            let recipeText = "";
+            let filmRecommendHtml = "";
+
+            if (currentMode === 'film') {
+                const isAuto = selectedCamera.type.includes("자동필카");
+                const subType = isAuto ? "auto" : "manual";
+                
+                recipeText = recipeDatabase.film[subType][selectedWeather];
+                const filmText = filmRecommendationDatabase[subType][selectedWeather];
+                filmRecommendHtml = `<div class="film-recommendation">🎞️ ${filmText}</div>`;
+            } else {
+                recipeText = recipeDatabase.digital[selectedWeather];
+            }
+
+            const cameraDisplayTitle = selectedCamera.name + (selectedCamera.lens ? ` (${selectedCamera.lens})` : '');
+
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `
+                <div class="recipe-book-header">DOC RECIPE & DAILY MISSION</div>
+                <div class="recipe-title">✨ [${cameraDisplayTitle}] 당일 한정 처방전</div>
+                <div class="recipe-detail">${recipeText}</div>
+                
+                ${filmRecommendHtml}
+
+                <div class="recipe-mission-box">
+                    <div class="recipe-mission-title">🎯 오늘의 운명적 시선 미션</div>
+                    <div class="recipe-mission-text">📸 ${missionData.text}</div>
+                    <button class="mission-inline-btn ${isMissionCleared ? 'completed' : ''}" 
+                            onclick="toggleInlineMission(this, '${missionData.key}')">
+                        ${isMissionCleared ? '🎉 미션 완수 인증 완료!' : '🥖 미션 완료하기'}
+                    </button>
+                </div>
+
+                <button class="download-btn" onclick="alert('레시피와 오늘 미션이 파티시에 노트에 저장되었습니다!')">💾 레시피 노트에 담기</button>
+                <a href="#" class="shop-affiliate-link" onclick="alert('제휴 쇼핑몰로 이동합니다.')">🛒 레시피에 어울리는 추천 소모품/소품 보러가기 →</a>
+            `;
+        }
+
+        function addReview() {
+            const fileInput = document.getElementById('review-file');
+            const commentInput = document.getElementById('review-comment');
+            const nickname = localStorage.getItem('patissierNickname') || '익명의 파티시에';
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('쇼케이스에 진열할 사진 파일을 선택해 주세요!');
+                return;
+            }
+            if (!commentInput.value.trim()) {
+                alert('따끈한 시식평을 한 줄 적어주세요!');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const newReview = {
+                    id: Date.now(),
+                    nickname: nickname,
+                    image: e.target.result,
+                    comment: commentInput.value.trim(),
+                    date: new Date().toLocaleDateString('ko-KR')
+                };
+
+                reviews.unshift(newReview);
+                localStorage.setItem('photoReviews_v2', JSON.stringify(reviews));
+                
+                fileInput.value = '';
+                commentInput.value = '';
+                renderReviews();
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function deleteReview(id) {
+            reviews = reviews.filter(rev => rev.id !== id);
+            localStorage.setItem('photoReviews_v2', JSON.stringify(reviews));
+            renderReviews();
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('review-list-container');
+            container.innerHTML = '';
+
+            if (reviews.length === 0) {
+                container.innerHTML = '<p style="text-align:center; font-size:12px; color:#aaa; font-weight:600; padding: 20px 0;">아직 진열된 컷이 없습니다. 미션 사진을 먼저 구워보세요!</p>';
+                return;
+            }
+
+            reviews.forEach((rev, index) => {
+                if (index === 1) {
+                    container.innerHTML += `
+                        <div class="ad-feed-item">
+                            <span class="ad-badge">AD</span>
+                            <div class="review-meta" style="color: var(--point-green);">☕ 베이커리 쉼터 협찬</div>
+                            <div class="review-text" style="font-size:12px; border:none; padding:0; background:none;">
+                                <strong>"사진 필터보다 중요한 건 감성 한 스푼!"</strong><br>
+                                아날로그 출사족을 위한 프리미엄 가죽 스트랩 10% 할인가 구경하기.
+                            </div>
+                            <a href="#" class="shop-affiliate-link" style="margin-top:8px; padding:6px; font-size:11px;" onclick="alert('광고 이동')">구경하러 가기 →</a>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <img src="${rev.image}" class="review-img" alt="구워진 사진">
+                        <div class="review-meta" style="display:flex; justify-content:space-between;">
+                            <span>🧑‍🍳 파티시에: ${rev.nickname} (${rev.date})</span>
+                            <button class="delete-btn" onclick="deleteReview(${rev.id})" style="font-size:11px;">치우기</button>
+                        </div>
+                        <div class="review-text">📸 ${rev.comment}</div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
