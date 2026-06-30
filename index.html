@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>죽은 사진사 클럽 (Photo Baking Club)</title>
     <style>
-        /* 🎨 따끈따끈하고 말랑한 베이커리 카페 톤앤매너 */
+        /* 🎨 깔끔하고 따뜻한 베이커리 카페 톤앤매너 */
         :root {
-            --bg-color: #fcf8f2;       /* 부드러운 우유 빛깔 base */
+            --bg-color: #fcf8f2;
             --card-bg: #ffffff;
-            --accent-color: #ff9f43;    /* 노릇노릇하게 잘 구워진 빵 색 */
-            --point-color: #e67e22;     /* 찐한 캐러멜 시럽 색 */
-            --text-main: #4a3728;      /* 따뜻한 초콜릿 브라운 */
-            --text-sub: #a08c7d;       /* 포근한 밀가루 감성 그레이 */
-            --border-color: #f1e5d7;    /* 보드라운 바닐라 크림 선 */
+            --accent-color: #ff9f43;    /* 노릇노릇한 빵 색 */
+            --point-color: #e67e22;     /* 달콤한 캐러멜 색 */
+            --text-main: #4a3728;      /* 코코아 브라운 */
+            --text-sub: #a08c7d;       /* 부드러운 크림 그레이 */
+            --border-color: #f1e5d7;
             --input-bg: #faf4ec;
         }
 
@@ -39,15 +39,11 @@
         }
 
         header h1 {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 800;
             color: var(--point-color);
             letter-spacing: -0.5px;
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
 
         header p {
@@ -56,13 +52,13 @@
             font-weight: 500;
         }
 
-        /* 🥐 폭신폭신한 탭 메뉴 */
+        /* 🥐 깔끔하게 다듬은 탭 메뉴 */
         .tab-container {
             display: flex;
             margin-bottom: 20px;
             background: #f0e2d3;
-            padding: 6px;
-            border-radius: 20px;
+            padding: 5px;
+            border-radius: 16px;
         }
 
         .tab-button {
@@ -74,29 +70,26 @@
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-            border-radius: 16px;
+            border-radius: 12px;
             transition: all 0.2s ease;
         }
 
         .tab-button.active {
             background: var(--card-bg);
             color: var(--point-color);
-            box-shadow: 0 4px 10px rgba(74, 55, 40, 0.1);
+            box-shadow: 0 4px 10px rgba(74, 55, 40, 0.08);
         }
 
-        /* 🥞 둥글둥글 귀여운 요리 스튜디오 카드 외관 */
+        /* 🥞 동글둥글하고 포근한 카드 레이아웃 */
         .card {
             background-color: var(--card-bg);
             border: 2px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 22px;
             padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 16px rgba(160, 140, 125, 0.08);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(160, 140, 125, 0.06);
         }
 
-        /* 요리 타이틀 데코 */
         .card h2 {
             font-size: 16px;
             font-weight: 800;
@@ -124,7 +117,7 @@
             padding: 12px 14px;
             background-color: var(--input-bg);
             border: 2px solid transparent;
-            border-radius: 14px;
+            border-radius: 12px;
             color: var(--text-main);
             font-size: 14px;
             font-weight: 600;
@@ -137,7 +130,7 @@
             border-color: var(--accent-color);
         }
 
-        /* 🍳 맛있게 굽기 버터 발린 버튼 */
+        /* 🍳 버튼 컴포넌트 */
         button.primary-btn {
             width: 100%;
             background-color: var(--accent-color);
@@ -145,34 +138,29 @@
             font-weight: 800;
             border: none;
             padding: 14px;
-            border-radius: 16px;
-            font-size: 15px;
+            border-radius: 14px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(255, 159, 67, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 159, 67, 0.2);
         }
 
         button.primary-btn:hover {
             background-color: var(--point-color);
-            transform: translateY(-1px);
         }
 
-        button.primary-btn:active {
-            transform: translateY(0);
-        }
-
-        /* 🧺 나의 식재료(장비) 바구니 리스트 */
-        .camera-list {
-            max-height: 150px;
+        /* 🧺 스크롤 목록 (장비 및 저장된 레시피용) */
+        .scroll-list {
+            max-height: 180px;
             overflow-y: auto;
             border: 2px dashed var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
             background: var(--input-bg);
             margin-top: 8px;
         }
 
-        .camera-item {
-            padding: 10px 14px;
+        .list-item {
+            padding: 12px 14px;
             font-size: 13px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -181,14 +169,13 @@
             font-weight: 600;
         }
 
-        .camera-item:last-child {
+        .list-item:last-child {
             border-bottom: none;
         }
 
-        .camera-item b {
+        .list-item b {
             color: var(--point-color);
             font-weight: 700;
-            margin-right: 4px;
         }
 
         .delete-btn {
@@ -198,15 +185,15 @@
             cursor: pointer;
             font-size: 11px;
             font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
-        /* 🍰 갓 구워진 비주얼의 결과창 연출 */
+        /* 🍰 갓 구워진 비주얼의 결과창 */
         #recommendation-result {
             display: none;
             border: 3px solid var(--accent-color);
-            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15);
             background: #fffefb;
         }
 
@@ -214,9 +201,8 @@
             background: #fff5eb;
             border: 2px solid #ffe3cc;
             padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            position: relative;
+            border-radius: 14px;
+            margin-bottom: 14px;
         }
 
         .mission-number {
@@ -236,20 +222,38 @@
         .recipe-box {
             background: #faf4ec;
             border: 2px dashed #e6d5c3;
-            padding: 16px;
-            border-radius: 16px;
+            padding: 14px;
+            border-radius: 12px;
             font-size: 13px;
             line-height: 1.6;
             color: #5c4738;
+            margin-bottom: 14px;
         }
 
         .recipe-box b {
             color: var(--point-color);
-            font-weight: 700;
+        }
+
+        /* 🧾 영구 아카이브 아이템 디자인 */
+        .archive-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            padding: 14px;
+        }
+        .archive-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--point-color);
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px;
         }
 
         @keyframes popUp {
-            from { opacity: 0; transform: scale(0.95); }
+            from { opacity: 0; transform: scale(0.96); }
             to { opacity: 1; transform: scale(1); }
         }
     </style>
@@ -257,72 +261,79 @@
 <body>
 
     <header>
-        <h1>🍞 죽은 사진사 클럽 🍳</h1>
-        <p>맛있는 셔터를 굽는 베이킹 레시피 스튜디오</p>
+        <h1>🍳 죽은 사진사 클럽 🍞</h1>
+        <p>오늘의 출사 셔터를 맛있게 굽는 레시피 스튜디오</p>
     </header>
 
     <div class="tab-container">
-        <button id="tab-film" class="tab-button active" onclick="switchTab('film')">🎞️ 필카 밀가루</button>
-        <button id="tab-digital" class="tab-button" onclick="switchTab('digital')">📟 디카 파우더</button>
-        <button id="tab-camcorder" class="tab-button" onclick="switchTab('camcorder')">📹 캠코더 시럽</button>
+        <button id="tab-film" class="tab-button active" onclick="switchTab('film')">🎞️ 필름 카메라</button>
+        <button id="tab-digital" class="tab-button" onclick="switchTab('digital')">📟 디지털 카메라</button>
+        <button id="tab-camcorder" class="tab-button" onclick="switchTab('camcorder')">📹 빈티지 캠코더</button>
     </div>
 
     <div class="card">
-        <h2 id="card-archive-title">🥣 재료 보관함 (필카 고르기)</h2>
+        <h2 id="card-archive-title">🥣 장비 보관함</h2>
         <div class="form-group">
-            <label for="camera-type">식재료 카테고리</label>
+            <label for="camera-type">카테고리 선택</label>
             <select id="camera-type">
-                <option value="35mm 수동필카">35mm 수동필카</option>
-                <option value="35mm 자동필카(똑딱이)">35mm 자동필카(똑딱이)</option>
-                <option value="중형 120필름">중형 120필름</option>
-            </select>
+                </select>
         </div>
         <div class="form-group">
-            <label for="camera-name">장비 모델명 적기</label>
+            <label for="camera-name">모델명 입력</label>
             <input type="text" id="camera-name" placeholder="예: 미놀타 X-700, 올림푸스 뮤2">
         </div>
-        <button class="primary-btn" onclick="addCamera()">수납장에 차곡차곡 넣기 🧺</button>
+        <button class="primary-btn" onclick="addCamera()">보관함에 등록하기 🧺</button>
 
         <div class="form-group" style="margin-top: 20px;">
-            <label>🛒 지금 수납장에 들어있는 장비</label>
-            <div class="camera-list" id="my-camera-list"></div>
+            <label>🛒 등록된 내 장비 목록</label>
+            <div class="scroll-list" id="my-camera-list"></div>
         </div>
     </div>
 
     <div class="card">
-        <h2>🔥 오늘의 출사 오븐 예열</h2>
+        <h2>🔥 오늘의 레시피 오븐 예열</h2>
         <div class="form-group">
-            <label for="select-my-camera">오늘 요리할 도구(장비)</label>
+            <label for="select-my-camera">출사에 들고 갈 도구</label>
             <select id="select-my-camera">
-                <option value="">수납장에서 재료를 먼저 꺼내주세요!</option>
+                <option value="">장비를 먼저 등록해 주세요!</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="weather-type">지금 창밖의 날씨/온도</label>
+            <label for="weather-type">지금 창밖의 환경과 날씨</label>
             <select id="weather-type">
-                <option value="bright">☀️ 쨍하게 잘 익은 맑은 날</option>
-                <option value="dark">☁️ 꾸덕하고 흐린 날 / 밤공기</option>
+                <option value="bright">☀️ 쨍하게 맑은 날</option>
+                <option value="dark">☁️ 어둑하고 흐린 날 / 밤공기</option>
                 <option value="rainy">☔ 촉촉하게 비 내리는 날</option>
-                <option value="indoor">🏠 포근한 실내 무드 / 내 방</option>
+                <option value="indoor">🏠 아늑한 실내 / 내 방 무드</option>
             </select>
         </div>
-        <button class="primary-btn" style="background-color: var(--point-color); box-shadow: 0 4px 10px rgba(230,126,34,0.3);" onclick="recommendCamera()">오늘의 셔터 베이킹 시작! 🍩</button>
+        <button class="primary-btn" style="background-color: var(--point-color); box-shadow: 0 4px 10px rgba(230,126,34,0.2);" onclick="recommendCamera()">오늘의 셔터 베이킹 시작! 🍩</button>
     </div>
 
     <div class="card" id="recommendation-result">
-        <h2>🍰 띵동! 갓 구워진 오늘의 시선</h2>
+        <h2>🍰 띵동! 오늘의 추천 레시피 완성</h2>
         <div class="mission-box">
             <div class="mission-number" id="result-mission-id">BAKING MISSION #001</div>
             <div class="mission-title" id="result-mission-text">빛과 그림자가 마찰하는 골목 계단 크롭하기</div>
         </div>
         <div class="recipe-box" id="result-recipe-text"></div>
+        <button class="primary-btn" style="background-color: #2ecc71; box-shadow: 0 4px 10px rgba(46,204,113,0.2);" onclick="saveCurrentRecipe()">이 레시피 내 노트에 저장하기 📝</button>
+    </div>
+
+    <div class="card">
+        <h2>📖 나만의 출사 레시피 노트</h2>
+        <div class="scroll-list" id="saved-recipe-list" style="max-height: 280px;">
+            </div>
     </div>
 
     <script>
         let currentMode = 'film';
         let myCameras = JSON.parse(localStorage.getItem('dps_cameras')) || [];
+        let savedRecipes = JSON.parse(localStorage.getItem('dps_recipes')) || [];
+        
+        let currentGeneratedData = null; // 현재 구워진 결과를 임시 저장하는 변수
 
-        // 365개 초거대 감성 미션 데이터베이스 (일부 축약/유지)
+        // 365 미션 데이터 풀
         const missionPool = [
             "골목길 담벼락에 길게 늘어진 전신주와 전선의 가위바위보 실루엣 크롭하기",
             "비 온 뒤 보도블록 틈새 물웅덩이에 완벽하게 대칭으로 뒤집힌 동네 빌라 풍경",
@@ -342,62 +353,62 @@
             "겨울날, 누군가 주차된 자동차 보닛 위에 정성스레 만들어 두고 간 주먹만 한 눈사람",
             "지하 주차장 경사로를 타고 내려오는 비스듬하고 묵직한 콘크리트 위 빛의 사선",
             "길가에 버려진 낡은 소파 위에 뻔뻔하게 올라가 나른하게 낮잠을 청하는 길고양이",
-            "새벽녘 가로등이 꺼지기 직전, 온 도시를 감싸 안는 차갑고 푸르스름한 새벽 공기감",
+            "새벽녘 가로등이 꺼지기 직전, 온 도시을 감싸 안는 차갑고 푸르스름한 새벽 공기감",
             "해 질 무렵 육교 위, 퇴근길 자동차들이 뿜어내는 헤드라이트의 붉고 노란 강물"
         ];
 
         const filmRecipeDatabase = {
-            bright: "🎞️ <b>추천 밀가루: 후지 컬러 C200 / 코닥 컬러플러스 200</b><br>• 노릇노릇한 주간 직사광선 아래서 바삭바삭한 원색의 대비를 단단하게 구워내는 레시피예요. 타지 않게 하이라이트 노출을 살짝 신경 써주세요!",
-            dark: "🎞️ <b>추천 밀가루: 코닥 골드 200 / 포트라 400</b><br>• 흐린 날의 꾸덕하고 푸르스름한 공기를 달콤하게 감싸 안아주는 카멜 시럽 입자감 매칭입니다. 암부가 뭉개지지 않고 포근하게 표현돼요.",
-            rainy: "🎞️ <b>추천 밀가루: 후지 수페리아 엑스트라 400 / 시네스틸 50D</b><br>• 빗길의 물기 어린 반사광을 민트소다처럼 청량하게 스캔해 냅니다. 촉촉하게 젖은 풍경에 가장 알맞은 반죽법이랍니다.",
-            indoor: "🎞️ <b>추천 밀가루: 코닥 울트라맥스 400 / 포트라 800</b><br>• 따뜻한 카페 조명 아래서 에스프레소처럼 진하고 고풍스러운 나무 가구의 텍스처를 묵직하게 뽑아내 주는 꿀조합 레시피입니다."
+            bright: "🎞️ <b>추천 매칭: 후지 컬러 C200 / 코닥 컬러플러스 200</b><br>• 주간 직사광선 아래서 원색의 대비를 단단하게 구워내는 레시피예요. 타지 않게 하이라이트 노출에 신경 써주세요!",
+            dark: "🎞️ <b>추천 매칭: 코닥 골드 200 / 포트라 400</b><br>• 흐린 날의 푸르스름한 공기를 달콤하게 감싸 안아주는 입자감 매칭입니다. 암부가 뭉개지지 않고 포근하게 표현돼요.",
+            rainy: "🎞️ <b>추천 매칭: 후지 수페리아 엑스트라 400 / 시네스틸 50D</b><br>• 빗길의 물기 어린 반사광을 민트소다처럼 청량하게 스캔해 냅니다. 촉촉하게 젖은 풍경에 알맞은 반죽법이랍니다.",
+            indoor: "🎞️ <b>추천 매칭: 코닥 울트라맥스 400 / 포트라 800</b><br>• 따뜻한 카페 조명 아래서 에스프레소처럼 진하고 고풍스러운 나무 가구의 텍스처를 묵직하게 뽑아내 주는 조합입니다."
         };
 
         const digitalColorDatabase = {
             ccd_compact: {
-                bright: `🎨 <b>Y2K 달콤 밀크티 레시피</b><br>• <b>화이트밸런스:</b> 흐림(Cloudy) 또는 6000K<br>• <b>노출 보정:</b> +0.3ev ~ +0.7ev | <b>ISO:</b> 100~200 고정<br>• <b>베이킹 팁:</b> 구형 CCD 센서 특유의 찐득하고 따뜻한 노란 조도가 강렬한 햇빛과 섞여 부드러운 밀크티 색감으로 반죽됩니다.`,
-                dark: `🎨 <b>2000s 미니홈피 도토리 레시피</b><br>• <b>화이트밸런스:</b> 일광(Daylight) | <b>노출 보정:</b> -0.3ev<br>• <b>채도/콘트라스트:</b> +1 (강렬한 원색 유도)<br>• <b>베이킹 팁:</b> 흐린 날의 밋밋함을 지우고 채도를 올려 세기말 하두리 캠이나 옛날 미니홈피 감성의 쨍한 원색 대비를 만들어냅니다.`,
-                rainy: `🎨 <b>바삭한 통밀 팝콘 플래시 레시피</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>노출 보정:</b> -0.3ev<br>• <b>ISO 감도:</b> 800 ~ 1600 고정 | <b>플래시:</b> 강제 발광 (ON) 🔥<br>• <b>베이킹 팁:</b> 밤비의 노이즈를 역이용해보세요! 플래시를 터트리면 토이카메라 파파라치 스냅 같은 힙한 동굴 효과가 구워집니다.`,
-                indoor: `🎨 <b>앤티크 카페 조명 조리법</b><br>• <b>화이트밸런스:</b> 백열등(Tungsten) 또는 3000K 고정 | <b>노출:</b> -0.3ev<br>• <b>베이킹 팁:</b> 주황색 카페 조명 아래서 차가운 푸른빛을 슬쩍 얹어, 묘하게 나른하고 신비로운 을지로 힙스터 감성 실내 무드를 뽑아냅니다.`
+                bright: `🎨 <b>Y2K 달콤 밀크티 레시피</b><br>• <b>화이트밸런스:</b> 흐림(Cloudy) 또는 6000K<br>• <b>노출 보정:</b> +0.3ev ~ +0.7ev | <b>ISO:</b> 100~200 고정<br>• 구형 CCD 센서 특유의 찐득하고 따뜻한 노란 조도가 강렬한 햇빛과 섞여 부드러운 밀크티 색감으로 표현됩니다.`,
+                dark: `🎨 <b>2000s 미니홈피 도토리 레시피</b><br>• <b>화이트밸런스:</b> 일광(Daylight) | <b>노출 보정:</b> -0.3ev<br>• <b>채도/콘트라스트:</b> +1<br>• 흐린 날의 밋밋함을 지우고 채도를 올려 미니홈피 감성의 쨍한 원색 대비를 만들어냅니다.`,
+                rainy: `🎨 <b>바삭한 통밀 플래시 레시피</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>노출 보정:</b> -0.3ev<br>• <b>ISO 감도:</b> 800 ~ 1600 고정 | <b>플래시:</b> 강제 발광 (ON)<br>• 밤비의 노이즈를 역이용해 플래시를 터트려 토이카메라 파파라치 스냅 같은 효과를 구워냅니다.`,
+                indoor: `🎨 <b>앤티크 카페 조명 조리법</b><br>• <b>화이트밸런스:</b> 백열등(Tungsten) 또는 3000K | <b>노출:</b> -0.3ev<br>• 주황색 카페 조명 아래서 차가운 푸른빛을 슬쩍 얹어, 나른하고 신비로운 실내 무드를 뽑아냅니다.`
             },
             toy_pop: {
-                bright: `🎨 <b>올드 팝아트 체리 레시피</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>컬러 모드:</b> 크롬(Chrome) 또는 채도 최고치<br>• <b>베이킹 팁:</b> 새파란 하늘과 새빨간 사물들을 로모그래피 필름처럼 엄청나게 쨍한 비비드 식감으로 맛있게 인쇄해 줍니다.`,
-                dark: `🎨 <b>녹차 말차 필름 레시피</b><br>• <b>화이트밸런스:</b> 그늘(Shadow) | <b>노출 보정:</b> +0.3ev | <b>채도:</b> -1<br>• <b>베이킹 팁:</b> 아련한 녹색과 브라운 톤이 극대화되어, 흐린 골목길의 식물이나 벽돌을 찍으면 빈티지 일러스트 엽서북처럼 구워집니다.`,
-                rainy: `🎨 <b>달콤 오렌지 팝 레시피</b><br>• <b>화이트밸런스:</b> 7000K 강제 오버 | <b>비네팅 효과:</b> ON (최대치)<br>• <b>베이킹 팁:</b> 비 오는 풍경과 완전 반대되는 따뜻한 톤을 강제로 먹여 장난감 카메라 고유의 키치하고 귀여운 왜곡을 즐기는 빌드입니다.`,
-                indoor: `🎨 <b>젤리 팝 스튜디오 조리법</b><br>• <b>화이트밸런스:</b> 형광등(Fluorescent) | <b>컬러 모드:</b> 비비드(Vivid)<br>• <b>베이킹 팁:</b> 알록달록한 카페 디저트나 소품을 조준하세요! 장난감 디카의 강한 원색 컬러감이 극대화되어 통통 튀는 무드가 됩니다.`
+                bright: `🎨 <b>올드 팝아트 체리 레시피</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>컬러 모드:</b> 크롬 또는 채도 최고치<br>• 새파란 하늘과 새빨간 사물들을 로모그래피 필름처럼 엄청나게 쨍한 비비드 식감으로 맛있게 인쇄해 줍니다.`,
+                dark: `🎨 <b>녹차 말차 필름 레시피</b><br>• <b>화이트밸런스:</b> 그늘(Shadow) | <b>노출 보정:</b> +0.3ev | <b>채도:</b> -1<br>• 아련한 녹색과 브라운 톤이 극대화되어, 흐린 골목길의 식물을 찍으면 빈티지 일러스트 엽서북처럼 구워집니다.`,
+                rainy: `🎨 <b>달콤 오렌지 팝 레시피</b><br>• <b>화이트밸런스:</b> 7000K 강제 오버 | <b>비네팅 효과:</b> ON<br>• 비 오는 풍경과 완전 반대되는 따뜻한 톤을 강제로 먹여 장난감 카메라 고유의 키치하고 귀여운 왜곡을 즐깁니다.`,
+                indoor: `🎨 <b>젤리 팝 스튜디오 조리법</b><br>• <b>화이트밸런스:</b> 형광등(Fluorescent) | <b>컬러 모드:</b> 비비드(Vivid)<br>• 알록달록한 카페 디저트나 소품을 조준하세요! 장난감 디카의 강한 원색 컬러감이 극대화됩니다.`
             },
             high_end: {
-                bright: `🎨 <b>달콤 쌉싸름 포지티브 크래커</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>노출 보정:</b> -0.3ev ~ -0.7ev<br>• <b>화이트밸런스:</b> 태양광 (Amber +2, Green -1)<br>• <b>베이킹 팁:</b> 깔끔한 선예도 위에 단단하고 포슬포슬한 크래커 같은 필름 질감을 얹어줍니다. 노출을 반 칸만 내리는 것이 팁!`,
-                dark: `🎨 <b>스모키 초콜릿 밤 레시피</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>노출 보정:</b> -1.0ev | <b>화이트밸런스:</b> 3200K<br>• <b>베이킹 팁:</b> 가로등 불빛의 오렌지빛이 푸른 밤안개와 섞이게 만듭니다. 어두운 골목을 홍콩 영화의 한 장면처럼 무드있게 반죽합니다.`,
-                rainy: `🎨 <b>말랑 푹신 포트라 스펀지케이크</b><br>• <b>화이트밸런스:</b> 그늘(Shadow) 모드 | <b>콘트라스트:</b> -1 | <b>명료도:</b> -2<br>• <b>베이킹 팁:</b> 비 오는 날 특유의 날카로운 하이라이트를 부드럽게 죽이고 뭉개주어 보드라운 코닥 포트라 느낌의 텍스처를 구현합니다.`,
-                indoor: `🎨 <b>캐러멜 쿠키 골드 세팅</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>화이트밸런스:</b> 백열등 모드 | <b>콘트라스트:</b> +1<br>• <b>베이킹 팁:</b> 실내 카페의 원목 가구나 가구들을 묵직한 카카오 브라운 톤이 감돌게 만들어 아늑함을 증폭시킵니다.`
+                bright: `🎨 <b>포지티브 크래커 레시피</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>노출 보정:</b> -0.3ev ~ -0.7ev<br>• <b>화이트밸런스:</b> 태양광 (Amber +2, Green -1)<br>• 깔끔한 선예도 위에 단단하고 포슬포슬한 크래커 같은 필름 질감을 얹어줍니다. 노출을 반 칸 내리는 것이 팁!`,
+                dark: `🎨 <b>스모키 초콜릿 밤 레시피</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>노출 보정:</b> -1.0ev | <b>화이트밸런스:</b> 3200K<br>• 가로등 불빛의 오렌지빛이 푸른 밤안개와 섞이게 만들어 어두운 골목을 영화의 한 장면처럼 반죽합니다.`,
+                rainy: `🎨 <b>말랑 푹신 포트라 세팅</b><br>• <b>화이트밸런스:</b> 그늘(Shadow) 모드 | <b>콘트라스트:</b> -1 | <b>명료도:</b> -2<br>• 비 오는 날 특유의 날카로운 하이라이트를 부드럽게 죽여 보드라운 코닥 포트라 느낌의 텍스처를 구현합니다.`,
+                indoor: `🎨 <b>캐러멜 쿠키 골드 세팅</b><br>• <b>이펙트:</b> 포지티브 필름 | <b>화이트밸런스:</b> 실내 백열등 모드 | <b>콘트라스트:</b> +1<br>• 실내 카페의 원목 가구들을 묵직한 카카오 브라운 톤이 감돌게 만들어 아늑함을 증폭시킵니다.`
             },
             mirrorless: {
-                bright: `🎨 <b>소다 슈슈 클래식 크롬</b><br>• <b>시뮬레이션:</b> 클래식 크롬 | <b>화밸:</b> 5200K (R+3, B-2)<br>• <b>베이킹 팁:</b> 청량하면서도 아련한 파스텔 색감으로 모사합니다. 하늘은 청록빛 메론소다로, 일상의 풍경은 미색 쿠키처럼 가벼워집니다.`,
-                dark: `🎨 <b>호밀빵 시티 그레인 토스트</b><br>• <b>픽처스타일:</b> 모노크롬 또는 네거티브 | <b>그레인:</b> Strong/Large<br>• <b>베이킹 팁:</b> 어두운 골목길에 카메라의 '입자감(그레인)' 기능을 잔뜩 켜서, 거칠고 고소한 호밀빵 같은 35mm 고감도 아날로그 질감을 표현합니다.`,
-                rainy: `🎨 <b>블루베리 시네마 젤리</b><br>• <b>화이트밸런스:</b> 3000K 강제 고정 | <b>노출:</b> +0.3ev<br>• <b>베이킹 팁:</b> 영화 촬영용 필름처럼 번지는 오렌지색 조명과 깊고 시원한 블루베리색 배경이 어우러져 이국적인 비주얼을 만들어냅니다.`,
-                indoor: `🎨 <b>포근포근 바닐라 킨포크</b><br>• <b>화이트밸런스:</b> 4500K | <b>노출 보정:</b> +0.7ev | <b>명료도:</b> -1<br>• <b>베이킹 팁:</b> 실내 소품이나 가구의 반사광을 한 스푼 부드럽게 죽여, 인테리어 잡지 속 따사로운 햇살 한 조각 같은 바닐라 무드를 인쇄합니다.`
+                bright: `🎨 <b>소다 슈슈 클래식 크롬</b><br>• <b>시뮬레이션:</b> 클래식 크롬 | <b>화밸:</b> 5200K (R+3, B-2)<br>• 청량하면서도 아련한 파스텔 색감으로 모사합니다. 하늘은 에메랄드 메론소다처럼 투명해집니다.`,
+                dark: `🎨 <b>호밀빵 시티 그레인 토스트</b><br>• <b>픽처스타일:</b> 모노크롬 또는 네거티브 | <b>그레인:</b> Strong/Large<br>• 어두운 골목길에 카메라의 입자감 기능을 켜서 거칠고 고소한 호밀빵 같은 아날로그 질감을 표현합니다.`,
+                rainy: `🎨 <b>블루베리 시네마 젤리</b><br>• <b>화이트밸런스:</b> 3000K 강제 고정 | <b>노출:</b> +0.3ev<br>• 영화 촬영용 필름처럼 번지는 오렌지색 조명과 깊고 시원한 블루베리색 배경이 어우러집니다.`,
+                indoor: `🎨 <b>포근포근 바닐라 킨포크</b><br>• <b>화이트밸런스:</b> 4500K | <b>노출 보정:</b> +0.7ev | <b>명료도:</b> -1<br>• 실내 소품이나 가구의 반사광을 부드럽게 죽여, 잡지 속 따사로운 햇살 한 조각 같은 바닐라 무드를 인쇄합니다.`
             }
         };
 
         const camcorderRecipeDatabase = {
             dv_6mm: {
-                bright: `📹 <b>90s 홈비디오 바나나 파운드케이크</b><br>• <b>화이트밸런스:</b> 태양광 | <b>노출:</b> +1.0ev | <b>비율:</b> 4:3 고정 📺<br>• <b>베이킹 팁:</b> 햇빛을 잔뜩 쪼여 비디오테이프 특유의 하얗고 포근한 '빛 번짐'을 유도합니다. 할머니 댁 옛날 홈비디오의 따스함이 뿜어져 나와요.`,
-                dark: `📹 <b>서늘한 시나몬 느와르 레시피</b><br>• <b>화이트밸런스:</b> 3200K | <b>노출 보정:</b> -0.7ev<br>• <b>베이킹 팁:</b> 저해상도 센서를 활용해 세기말 다큐멘터리나 독립영화 스틸컷 같은 쓸쓸하면서도 빈티지한 아날로그 브라운 톤을 베이킹합니다.`,
-                rainy: `📹 <b>자글자글 VHS 초코칩 토스트</b><br>• <b>화이트밸런스:</b> 자동 | <b>디지털 필터:</b> 세피아 코팅<br>• <b>베이킹 팁:</b> 비 내리는 날 자글자글 끓어오르는 비디오 노이즈를 달콤한 텍스처처럼 삼아 빗물 흐르는 유리창을 영화처럼 조리해 냅니다.`,
-                indoor: `📹 <b>달콤 쌉쌀 방구석 브라우니</b><br>• <b>화이트밸런스:</b> 백열등 고정 | <b>노출 보정:</b> +0.3ev<br>• <b>베이킹 팁:</b> 조명 하나 켜진 아늑한 내 방에 최적화된 세팅이에요. 거친 입자감과 실내 그림자가 어우러져 사적인 영화 스틸컷 느낌을 줍니다.`
+                bright: `📹 <b>90s 홈비디오 바나나 파운드</b><br>• <b>화이트밸런스:</b> 태양광 | <b>노출:</b> +1.0ev | <b>비율:</b> 4:3 고정<br>• 햇빛을 잔뜩 쪼여 비디오테이프 특유의 포근한 '빛 번짐'을 유도합니다. 옛날 홈비디오의 따스함이 뿜어져 나와요.`,
+                dark: `📹 <b>서늘한 시나몬 느와르</b><br>• <b>화이트밸런스:</b> 3200K | <b>노출 보정:</b> -0.7ev<br>• 저해상도 센서를 활용해 독립영화 스틸컷 같은 쓸쓸하면서도 빈티지한 브라운 톤을 베이킹합니다.`,
+                rainy: `📹 <b>자글자글 VHS 초코칩 레시피</b><br>• <b>화이트밸런스:</b> 자동 | <b>디지털 필터:</b> 세피아 코팅<br>• 비 내리는 날 자글자글 끓어오르는 비디오 노이즈를 달콤한 텍스처처럼 삼아 유리창을 조리해 냅니다.`,
+                indoor: `📹 <b>달콤 쌉쌀 방구석 브라우니</b><br>• <b>화이트밸런스:</b> 백열등 고정 | <b>노출 보정:</b> +0.3ev<br>• 조명 하나 켜진 아늑한 내 방에 최적화되어 사적인 영화 스틸컷 느낌을 줍니다.`
             },
             hybrid_memory: {
-                bright: `📹 <b>작티 메론 셔벗 레시피</b><br>• <b>화이트밸런스:</b> 그늘(Shadow)모드 | <b>채도 모드:</b> 높음(High)<br>• <b>베이킹 팁:</b> 2000년대 미니 캠코더 특유의 원색 압축 컬러를 살려, 주황빛 햇살이 화면 가득 상큼하고 키치하게 차오르도록 구워줍니다.`,
-                dark: `📹 <b>시티 나이트 팝콘 푸딩</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>노출 보정:</b> -0.3ev<br>• <b>베이킹 팁:</b> 광량이 부족할 때 생기는 하이브리드 센서 고유의 자글거리는 자잘 노이즈를 마치 설탕 가루처럼 콕콕 입혀 즐기는 스타일입니다.`,
-                rainy: `📹 <b>청량 블루 하와이 시네마</b><br>• <b>화이트밸런스:</b> 4000K | <b>색조(Tint):</b> 마젠타 방향 +1~2 조정<br>• <b>베이킹 팁:</b> 번지는 골목 불빛을 푸른 계열과 오묘한 보랏빛으로 비틀어버려 인디 뮤직비디오 속 아련한 한 장면을 얹어줍니다.`,
-                indoor: `📹 <b>다이어리 컵케이크 롤링</b><br>• <b>포커스 세팅:</b> 수동 포커스(MF)로 가끔 초점을 흐릿하게 조절!<br>• <b>베이킹 팁:</b> 예쁜 소품이나 음료 위로 초점을 슥 흐렸다가 맞추면 옛날 싸이월드 감성의 일상 비디오 스틸 같은 예쁜 분위기가 뚝딱 완성돼요.`
+                bright: `📹 <b>작티 메론 셔벗 레시피</b><br>• <b>화이트밸런스:</b> 그늘(Shadow)모드 | <b>채도 모드:</b> 높음(High)<br>• 2000년대 미니 캠코더 특유의 원색 컬러를 살려, 주황빛 햇살이 화면 가득 상큼하게 차오르도록 구워줍니다.`,
+                dark: `📹 <b>시티 나이트 팝콘 푸딩</b><br>• <b>화이트밸런스:</b> 자동(AWB) | <b>노출 보정:</b> -0.3ev<br>• 광량이 부족할 때 생기는 하이브리드 센서 고유의 자글거리는 노이즈를 입혀 즐기는 스타일입니다.`,
+                rainy: `📹 <b>청량 블루 하와이 시네마</b><br>• <b>화이트밸런스:</b> 4000K | <b>색조:</b> 마젠타 방향 조정<br>• 번지는 골목 불빛을 푸른 계열과 오묘한 보랏빛으로 비틀어버려 인디 뮤직비디오 속 한 장면을 얹어줍니다.`,
+                indoor: `📹 <b>다이어리 컵케이크 롤링</b><br>• <b>포커스 세팅:</b> 수동 포커스(MF)로 가끔 초점을 흐릿하게 조절!<br>• 예쁜 소품 위로 초점을 슥 흐렸다가 맞추면 미니홈피 일상 동영상 같은 예쁜 분위기가 완성돼요.`
             },
             toy_video: {
-                bright: `📹 <b>완구점 플라스틱 젤리 레시피</b><br>• <b>화이트밸런스:</b> 자동 | <b>노출 보정:</b> +0.3ev | <b>채도:</b> 최대<br>• <b>베이킹 팁:</b> 초저가 완구용 렌즈의 기분 좋은 왜곡과 색수차를 이용해 장난감 마을에 들어온 듯 귀여운 원색 젤리 톤을 구워냅니다.`,
-                dark: `📹 <b>지직지직 까만 오레오 머핀</b><br>• <b>화이트밸런스:</b> 흐림(Cloudy) | <b>노출 보정:</b> -0.7ev<br>• <b>베이킹 팁:</b> 토이캠코더가 어둠 속에서 어쩔 줄 몰라 뭉개버리는 까만 어둠과 노이즈를 아예 힙한 펑크 예술처럼 귀엽게 소화하는 기법입니다.`,
-                rainy: `📹 <b>레몬 사탕 투명 오븐</b><br>• <b>화이트밸런스:</b> 7000K 강제 세팅 | <b>노출 보정:</b> 0.0ev<br>• <b>베이킹 팁:</b> 비 내리는 거리에 새노랗고 따뜻한 톤을 입혀서 노란색 플라스틱 우산 속에서 투명하게 밖을 보는 듯한 키치함을 입혀줍니다.`,
-                indoor: `📹 <b>빈티지 마카롱 소품숍 레시피</b><br>• <b>화이트밸런스:</b> 형광등 모드 | <b>노출 보정:</b> +0.3ev<br>• <b>베이킹 팁:</b> 렌즈 가장자리가 몽글몽글 흐려지는 토이캠 고유의 맛이 실내 조명과 합쳐져 기묘하고 사랑스러운 빈티지 카드처럼 인쇄됩니다.`
+                bright: `📹 <b>완구점 플라스틱 젤리</b><br>• <b>화이트밸런스:</b> 자동 | <b>노출 보정:</b> +0.3ev | <b>채도:</b> 최대<br>• 초저가 완구용 렌즈의 기분 좋은 왜곡을 이용해 장난감 마을에 들어온 듯 귀여운 원색 젤리 톤을 구워냅니다.`,
+                dark: `📹 <b>지직지직 까만 오레오 머핀</b><br>• <b>화이트밸런스:</b> 흐림(Cloudy) | <b>노출 보정:</b> -0.7ev<br>• 토이캠코더가 어둠 속에서 어쩔 줄 몰라 뭉개버리는 노이즈를 힙한 펑크 예술처럼 귀엽게 소화하는 기법입니다.`,
+                rainy: `📹 <b>레몬 사탕 투명 오븐</b><br>• <b>화이트밸런스:</b> 7000K 세팅 | <b>노출 보정:</b> 0.0ev<br>• 비 내리는 거리에 새노랗고 따뜻한 톤을 입혀서 투명 노란 우산 속에서 밖을 보는 듯한 키치함을 줍니다.`,
+                indoor: `📹 <b>빈티지 마카롱 소품숍</b><br>• <b>화이트밸런스:</b> 형광등 모드 | <b>노출 보정:</b> +0.3ev<br>• 렌즈 가장자리가 몽글몽글 흐려지는 토이캠 고유의 맛이 실내 조명과 합쳐져 사랑스러운 빈티지 카드처럼 인쇄됩니다.`
             }
         };
 
@@ -407,18 +418,15 @@
             document.getElementById('tab-digital').classList.toggle('active', mode === 'digital');
             document.getElementById('tab-camcorder').classList.toggle('active', mode === 'camcorder');
             
-            const archiveTitle = document.getElementById('card-archive-title');
             const cameraTypeSelect = document.getElementById('camera-type');
             
             if (mode === 'film') {
-                archiveTitle.innerText = "🥣 재료 보관함 (필카 고르기)";
                 cameraTypeSelect.innerHTML = `
                     <option value="35mm 수동필카">35mm 수동필카</option>
                     <option value="35mm 자동필카(똑딱이)">35mm 자동필카(똑딱이)</option>
                     <option value="중형 120필름">중형 120필름</option>
                 `;
             } else if (mode === 'digital') {
-                archiveTitle.innerText = "🥣 재료 보관함 (디카 고르기)";
                 cameraTypeSelect.innerHTML = `
                     <option value="Y2K 구형 CCD 디카">📟 Y2K 구형 CCD 디카 (똑딱이)</option>
                     <option value="토이카메라 / 파인픽스 올드 팝">🧸 토이카메라 / 파인픽스 올드 팝</option>
@@ -426,7 +434,6 @@
                     <option value="미러리스 / DSLR">🔮 미러리스 / DSLR</option>
                 `;
             } else if (mode === 'camcorder') {
-                archiveTitle.innerText = "🥣 재료 보관함 (캠코더 고르기)";
                 cameraTypeSelect.innerHTML = `
                     <option value="6mm 테이프 DV 캠코더">📼 6mm 테이프 DV 캠코더</option>
                     <option value="하이브리드 메모리 캠코더">🔋 하이브리드 메모리 캠코더 (작티계열)</option>
@@ -446,7 +453,7 @@
             const name = nameInput.value.trim();
             
             if (!name) {
-                alert("기종 이름을 꼭 적어주세요! 🍩");
+                alert("기종 이름을 입력해 주세요! 🍩");
                 return;
             }
             
@@ -472,16 +479,16 @@
             const filtered = myCameras.filter(cam => cam.mode === currentMode);
             
             if (filtered.length === 0) {
-                listContainer.innerHTML = `<div style="padding: 18px; font-size:13px; color:var(--text-sub); text-align:center;">지금은 바구니가 비어있어요 🧺</div>`;
+                listContainer.innerHTML = `<div style="padding: 18px; font-size:13px; color:var(--text-sub); text-align:center;">등록된 장비가 없습니다. 🧺</div>`;
                 return;
             }
             
             filtered.forEach(cam => {
                 const item = document.createElement('div');
-                item.className = 'camera-item';
+                item.className = 'list-item';
                 item.innerHTML = `
                     <span><b>[${cam.type}]</b> ${cam.name}</span>
-                    <button class="delete-btn" onclick="deleteCamera(${cam.id})">빼기</button>
+                    <button class="delete-btn" onclick="deleteCamera(${cam.id})">제거</button>
                 `;
                 listContainer.appendChild(item);
             });
@@ -493,7 +500,7 @@
             const filtered = myCameras.filter(cam => cam.mode === currentMode);
             
             if (filtered.length === 0) {
-                select.innerHTML = `<option value="">여기에 넣을 재료를 먼저 등록해 주세요!</option>`;
+                select.innerHTML = `<option value="">여기에 매칭할 장비를 보관함에 먼저 등록해 주세요!</option>`;
                 return;
             }
             
@@ -511,8 +518,8 @@
             const cameraId = cameraSelect.value;
             const selectedWeather = weatherSelect.value;
             
-            if (!cameraId || cameraId.includes("등록") || cameraId.includes("재료")) {
-                alert("오늘 쓸 재료 도구를 수납장에서 쏙 골라주세요! 🥯");
+            if (!cameraId || cameraId.includes("등록") || cameraId.includes("매칭할")) {
+                alert("오늘 출사에 사용할 장비를 선택해 주세요! 🥯");
                 return;
             }
             
@@ -523,7 +530,7 @@
             const selectedMission = missionPool[randomIdx];
             const missionNum = String(randomIdx + 1).padStart(3, '0');
             
-            document.getElementById('result-mission-id').innerText = `🧁 BAKING MISSION #${missionNum}`;
+            document.getElementById('result-mission-id').innerText = `BAKING MISSION #${missionNum}`;
             document.getElementById('result-mission-text').innerText = selectedMission;
             
             let recipeHtml = "";
@@ -548,10 +555,71 @@
             document.getElementById('result-recipe-text').innerHTML = recipeHtml;
             document.getElementById('recommendation-result').style.display = 'block';
             document.getElementById('recommendation-result').scrollIntoView({ behavior: 'smooth' });
+
+            // 언제든 보관함에 넣을 수 있게 글로벌 변수에 캐싱
+            currentGeneratedData = {
+                id: Date.now(),
+                cameraName: selectedCamera.name,
+                cameraType: selectedCamera.type,
+                missionId: `MISSION #${missionNum}`,
+                missionText: selectedMission,
+                recipeText: recipeHtml,
+                date: new Date().toLocaleDateString('ko-KR')
+            };
+        }
+
+        // 📝 영구 노트에 레시피 저장 기능 추가
+        function saveCurrentRecipe() {
+            if (!currentGeneratedData) return;
+
+            // 중복 저장 방지 확인
+            if (savedRecipes.some(r => r.missionText === currentGeneratedData.missionText && r.cameraName === currentGeneratedData.cameraName)) {
+                alert("이미 내 노트에 저장된 조리법입니다! 🍪");
+                return;
+            }
+
+            savedRecipes.unshift(currentGeneratedData); // 최신 게 위로 오도록 함
+            localStorage.setItem('dps_recipes', JSON.stringify(savedRecipes));
+            renderSavedRecipes();
+            alert("나만의 출사 레시피 노트에 성공적으로 기록되었습니다! 📖✨");
+        }
+
+        function deleteRecipe(id) {
+            savedRecipes = savedRecipes.filter(r => r.id !== id);
+            localStorage.setItem('dps_recipes', JSON.stringify(savedRecipes));
+            renderSavedRecipes();
+        }
+
+        function renderSavedRecipes() {
+            const container = document.getElementById('saved-recipe-list');
+            container.innerHTML = "";
+
+            if (savedRecipes.length === 0) {
+                container.innerHTML = `<div style="padding: 24px; font-size:13px; color:var(--text-sub); text-align:center;">아직 구워진 보관용 레시피가 없습니다.<br>오븐을 돌려 나만의 레시피를 수집해 보세요!</div>`;
+                return;
+            }
+
+            savedRecipes.forEach(r => {
+                const item = document.createElement('div');
+                item.className = 'list-item archive-item';
+                item.innerHTML = `
+                    <div class="archive-header">
+                        <span>📅 ${r.date} | 📷 ${r.cameraName} (${r.cameraType})</span>
+                        <button class="delete-btn" onclick="deleteRecipe(${r.id})">삭제</button>
+                    </div>
+                    <div style="font-size: 13px; font-weight: 800; color: var(--point-color); margin-top: 2px;">${r.missionId}</div>
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">🎯 ${r.missionText}</div>
+                    <div style="font-size: 12px; color: #5c4738; background: #fffefb; padding: 10px; border-radius: 8px; width: 100%; border: 1px solid var(--border-color); line-height: 1.5;">
+                        ${r.recipeText}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
         }
 
         window.onload = function() {
             switchTab('film');
+            renderSavedRecipes(); // 첫 로드 시 저장된 레시피 뿌려주기
         };
     </script>
 </body>
